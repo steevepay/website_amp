@@ -1,0 +1,25 @@
+version: "3.5"
+
+services:
+  steeve-website:
+    build: .
+    container_name: steevep.com
+    restart: always
+    # port make it available outside the container AND server
+    # ports:
+    #   - "3008:80"
+    # expose make it only available outside the container
+    expose:
+      - "3008"
+    command: "npm run start"
+    environment:
+      - VIRTUAL_HOST=steevep.com
+      - LETSENCRYPT_HOST=steevep.com
+      - LETSENCRYPT_EMAIL=steevepay@gmail.com
+    networks:
+      - default
+
+networks:
+  default:
+    external:
+      name: webproxy
